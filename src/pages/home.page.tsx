@@ -63,9 +63,13 @@ export default function HomePage() {
             {/*carregar as imagem antes */}
 
             <div className="hidden" id="loadcontent">
-                <img src="./src/assets/banner1.png" alt="" />
-                <img src="./src/assets/banner2.png" alt="" />
-                <img src="./src/assets/banner3.png" alt="" />
+                <img src="./banner1.png" alt="" />
+                <img src="./banner2.png" alt="" />
+                <img src="./banner3.png" alt="" />
+                <img src="./cardGame1.jpg" alt="" />
+                <img src="./cardGame2.jpg" alt="" />
+                <img src="./cardGame3.jpg" alt="" />
+                <img src="./cardGame4.jpg" alt="" />
             </div>
 
             {userToken ? <Header balance={Number(balance)} /> : <NLHeader onLoginClick={() => { setSLForm(true) }} onRegisterClick={() => { setSRForm(true) }} />}
