@@ -31,10 +31,11 @@ export default function CardGame({ item, onGameClick }: CardGameProps) {
 
 
         <img
-          src={`../${item.imageUrl}.jpg`}
+          src={`.//${item.imageUrl}.jpg`}
           className="object-cover w-full h-full transition duration-200 group-hover:blur-sm group-hover:scale-125"
           alt={`Imagem do jogo ${item.name}`}
         />
+        
       </div>
 
       {/* Conteúdo */}

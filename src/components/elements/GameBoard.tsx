@@ -12,7 +12,10 @@ export default function Gameboard({ game, userId }: { game: Game, userId: string
     setLoading(true);
     const res = await bet(Number(game.id), userId, setLoading);
     setResponse(res);
-    setShowResult(true); // abre o card automaticamente
+    setTimeout(() => {
+      
+      setShowResult(true); // abre o card automaticamente
+    }, 900);
   };
 
   return (
@@ -33,14 +36,14 @@ export default function Gameboard({ game, userId }: { game: Game, userId: string
           <button
             onClick={fetchBet}
             disabled={loading}
-            className="mt-4 w-40 py-2 bg-accent-600 hover:bg-accent-700 text-white rounded-lg font-semibold shadow-md transition disabled:opacity-50"
+            className={`mt-4 w-40 py-2 ${loading ?"pointer-events-none bg-neutral-700" : "bg-accent-600 pointer-events-auto hover:bg-accent-700"} text-white rounded-lg font-semibold shadow-md transition disabled:opacity-50`} 
           >
             {loading ? "Processando..." : "RASPAR!"}
           </button>
 
           {/* RESULT MODAL */}
           {showResult && (
-            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="fixed inset-0 animate-formin bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
               <div className="bg-neutral-900 border border-neutral-700 p-6 rounded-xl shadow-2xl w-80 text-center animate-fadeIn">
                 
                 {/* Título */}

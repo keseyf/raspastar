@@ -2,6 +2,8 @@ import axios from "axios";
 
 export const bet = async (gameId: number, userId: string, setLoading: any) => {
     try {
+        const sleep = (ms:any) => new Promise(resolve => setTimeout(resolve, ms))
+        await sleep(350)
 
         if(!gameId){
             return "Game Id não definido"
