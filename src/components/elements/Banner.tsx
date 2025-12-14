@@ -6,9 +6,9 @@ export default function BannerArea() {
   const [windowSize, setWindowSize] = useState<number>(window.innerWidth);
 
   const imgs = [
-    "/public/banner1.png",
-    "/public/banner2.png",
-    "/public/banner3.png"
+    "/banner1.png",
+    "/banner2.png",
+    "/banner3.png"
   ];
 
   const prev = () => {
