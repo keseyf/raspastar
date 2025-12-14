@@ -14,7 +14,7 @@ type Props = {
 export default function NLHeader({onRegisterClick, onLoginClick}: Props, 
  ){
     return(
-        <header className="w-full z-1000 sticky top-0 px-10 py-3 border border-neutral-600/50 bg-neutral-900/70 backdrop-blur-lg">
+        <header className="w-full z-1000 sticky top-0 px-5 py-3 border border-neutral-600/50 bg-neutral-900/70 backdrop-blur-lg">
             <nav className="flex w-full justify-between items-center">
                 
                     <a href="/" className="font-bold text-lg justify-center flex hover:scale-90 duration-200 items-center space-x-3">
