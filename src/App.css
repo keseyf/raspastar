@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme {
+  --color-accent-600: #654def;
+  --color-accent-700: #501fff;
+
+  /* aqui só registramos a animação */
+  --animate-easefade: easefade 1s;
+  --animate-easego: easego 1s;
+  --animate-formin: ease formin 1s;
+  --animate-formout: ease-in formout 1s;
+  --animate-easeup: ease easeup 5s
+}
+
+@keyframes scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-scroll {
+  animation: scroll 300s linear infinite;
+}
+
+/* keyframes precisam ficar fora do bloco @theme */
+@keyframes easefade {
+  0% {
+    opacity: 0;
+    transform: translateX(-10%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+
+  }
+}
+
+@keyframes easeup {
+  0% {
+    opacity: 0;
+    transform: translateY(-20%);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(0%);
+
+  }
+  80% {
+    opacity: 1;
+    transform: translateX(0%);
+
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20%);
+  }
+}
+
+@keyframes easego {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(10%);
+
+  }
+}
+
+@keyframes formin {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+
+  }
+}
+
+@keyframes formout {
+  0% {
+    opacity: 1;
+
+  }
+  100% {
+    opacity: 0;
+
+  }
+}
+
+
+:root {
+  @apply bg-neutral-950 text-gray-200;
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
