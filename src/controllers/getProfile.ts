@@ -6,7 +6,7 @@ export default async function getProfile(
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ): Promise<ResponseData | undefined> {
     try {
-        const response = await axios.get(import.meta.env.VITE_API_URL+"/users/profile/",
+        const response = await axios.get(import.meta.env.VITE_API_URL+"users/profile/",
             {
                 headers: {
                     "x-api-key": import.meta.env.VITE_API_KEY,
