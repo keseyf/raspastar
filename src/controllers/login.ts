@@ -4,7 +4,7 @@ import type { ResponseData } from "../utils/interfaces";
 export default async function loginController({ email, password }: { email: string, password: string }): Promise<ResponseData> {
     try {
         const response = await axios.post(
-            import.meta.env.VITE_API_URL + "/users/login",
+            import.meta.env.VITE_API_URL + "users/login",
             { email, password },
             {
                 headers: {
