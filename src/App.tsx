@@ -5,10 +5,22 @@ import NotFound from './pages/notFound';
 import Game from './pages/Game';
 import ProfilePage from './pages/Profile';
 import About from './pages/about';
+import { useEffect } from 'react';
+import { desabilitarCliqueDireito, bloquearAtalhos } from './controllers/blockDevTools';
 
 function App() {
+  
+    useEffect(() => {
+        window.addEventListener("contextmenu", desabilitarCliqueDireito, { passive: false });
+        window.addEventListener("keydown", bloquearAtalhos, { passive: false });
+        return () => {
+            window.removeEventListener("contextmenu", desabilitarCliqueDireito);
+            window.removeEventListener("keydown", bloquearAtalhos);
+        }
+    }, [])
 
   return (
+
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
