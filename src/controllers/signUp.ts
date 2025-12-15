@@ -8,7 +8,7 @@ export default async function signUpController({
     try {
         // Cria o usuário
         await axios.post(
-            import.meta.env.VITE_API_URL + "/users/create/",
+            import.meta.env.VITE_API_URL + "users/create/",
             { username, name, cpf, password, email },
             {
                 headers: {
