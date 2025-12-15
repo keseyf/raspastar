@@ -9,15 +9,15 @@ import { useEffect } from 'react';
 import { desabilitarCliqueDireito, bloquearAtalhos } from './controllers/blockDevTools';
 
 function App() {
-  
-    useEffect(() => {
-        window.addEventListener("contextmenu", desabilitarCliqueDireito, { passive: false });
-        window.addEventListener("keydown", bloquearAtalhos, { passive: false });
-        return () => {
-            window.removeEventListener("contextmenu", desabilitarCliqueDireito);
-            window.removeEventListener("keydown", bloquearAtalhos);
-        }
-    }, [])
+
+    // useEffect(() => {
+    //     window.addEventListener("contextmenu", desabilitarCliqueDireito, { passive: false });
+    //     window.addEventListener("keydown", bloquearAtalhos, { passive: false });
+    //     return () => {
+    //         window.removeEventListener("contextmenu", desabilitarCliqueDireito);
+    //         window.removeEventListener("keydown", bloquearAtalhos);
+    //     }
+    // }, [])
 
   return (
 

@@ -3,17 +3,22 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import DownMenuMobile from "../components/elements/DownMenuMobile";
 import type { ResponseData } from "../utils/interfaces";
-import getProfile from "../controllers/getProfile";
 import Header from "../components/elements/Header";
 import fetchProfiile from "../services/fetchProfile";
+import Wallet from "../components/elements/Wallet";
 
 export default function ProfilePage() {
     const navigate = useNavigate();
+
     const [windowSize, setWindowSize] = useState<number>(
         typeof window !== "undefined" ? window.innerWidth : 0
     );
+
     const [loading, setLoading] = useState(true);
     const [response, setResponse] = useState<ResponseData>();
+
+    const [showLForm, setSLForm] = useState(false);
+    const [showWallet, setShowWallet] = useState(false);
 
     const userToken = Cookies.get("userToken");
 
@@ -23,7 +28,7 @@ export default function ProfilePage() {
             return;
         }
 
-        fetchProfiile({userToken,setLoading,setResponse})
+        fetchProfiile({ userToken, setLoading, setResponse });
     }, [userToken, navigate]);
 
     useEffect(() => {
@@ -50,7 +55,26 @@ export default function ProfilePage() {
                 </div>
             )}
 
-            <DownMenuMobile />
+            <DownMenuMobile
+                onClickProfileEvent={() => {
+                    if (userToken) {
+                        navigate("/perfil");
+                    } else {
+                        setSLForm(true);
+                    }
+                }}
+                onClickWalletEvent={() => {
+                    if (userToken) {
+                        setShowWallet(prev => !prev);
+                    } else {
+                        setSLForm(true);
+                    }
+                }}
+            />
+
+            {showWallet && (
+                <Wallet onClickCloseEvent={() => setShowWallet(false)} />
+            )}
         </div>
     );
 }

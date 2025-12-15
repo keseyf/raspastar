@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getGameData = async (setGameInfo: React.Dispatch<React.SetStateAction<any>>, setLoading: React.Dispatch<React.SetStateAction<boolean>>, setError: React.Dispatch<React.SetStateAction<string>>, id: number) => {  
     try { 
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}games/getById/"+id`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}games/getById/`+id, {
           headers: {
             "x-api-key": import.meta.env.VITE_API_KEY
           }

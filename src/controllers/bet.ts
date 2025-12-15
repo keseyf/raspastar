@@ -13,7 +13,7 @@ export const bet = async (gameId: number, userId: string, setLoading: any) => {
             return "User Id não definido"
         }
 
-        const response = await axios.post("http://localhost:4444/api/v2/games/gambling", {}, {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}games/gambling`, {}, {
             headers: {
                 "x-api-key": "f455142c9fa86c67b9093b57990a8cd0a3d7e7603683dbdce1cfac9328baa983",
                 "x-game-id": gameId,

@@ -26,9 +26,9 @@ export default function Gameboard({ game, userId }: { game: Game, userId: string
             {[...Array(9)].map((_, i) => (
               <div
                 key={i}
-                className="w-24 h-24 bg-neutral-800 border border-neutral-600 rounded-lg flex items-center justify-center text-white text-2xl font-bold shadow-inner"
+                className="w-24 h-24 bg-neutral-800 border border-neutral-600 rounded-lg flex items-center justify-center text-white text-sm text-center font-bold shadow-inner"
               >
-                {response?.board?.[i] ?? ""}
+                {response?.board?.[i] ? response?.board?.[i] : "Nada"}
               </div>
             ))}
           </div>

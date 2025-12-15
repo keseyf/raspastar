@@ -10,13 +10,17 @@ import LoginForm from "../components/elements/Login";
 import SignUpForm from "../components/elements/SignUp";
 import fetchProfiile from "../services/fetchProfile";
 import Gameboard from "../components/elements/GameBoard";
+import Wallet from "../components/elements/Wallet";
 
 export default function GameInfoPage() {
   const userToken = Cookies.get("userToken");
   const [showLForm, setSLForm] = useState(false);
   const [showRForm, setSRForm] = useState(false);
   const [response, setResponse] = useState<ResponseData>();
+    const [showWallet, setShowWallet] = useState(false);
+  
   const [windowSize, setWindowSize] = useState<number>(window.innerWidth);
+
   const navigate = useNavigate();
   const { id } = useParams();
   const [gameInfo, setGameInfo] = useState<Game | null>(null);
@@ -69,9 +73,24 @@ export default function GameInfoPage() {
         <p>Jogo não encontrado.</p>
       )}
 
-      {windowSize <= 768 && userToken && <DownMenuMobile />}
+      {windowSize <= 768 && userToken && <DownMenuMobile onClickProfileEvent={() => {
+                if (userToken) {
+                    navigate("/perfil")
+                } else {
+                    setSLForm(true)
+                }
+            }} onClickWalletEvent={()=>{
+                if (userToken) {
+                    setShowWallet(!showWallet)
+                } else {
+                    setSLForm(true)
+                }
+            }}/>}
       {showRForm && <SignUpForm onClickEvent={() => setSRForm(false)} />}
       {showLForm && <LoginForm onClickEvent={() => setSLForm(false)} />}
+      {showWallet && (
+                      <Wallet onClickCloseEvent={() => setShowWallet(false)} />
+                  )}
     </div>
   );
 }
