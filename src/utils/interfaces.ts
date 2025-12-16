@@ -7,6 +7,16 @@ export interface Game {
   gamePrice: number
 }
 
+export type Order = {
+  id: string;
+  typeOrder: "WITHDRAW" | "DEPOSIT";
+  amount: string;
+  desc: string;
+  createdAt?: string;
+};
+
+export type TabType = "WITHDRAW" | "DEPOSIT";
+
 export interface ResponseData {
   message: string,
   status: number,
@@ -21,4 +31,5 @@ export interface UserData {
   email: string,
   cpf: string,
   balance: number,
+  orders: Order[]
 }
