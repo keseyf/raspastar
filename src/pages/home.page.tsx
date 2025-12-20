@@ -17,7 +17,7 @@ import Wallet from "../components/elements/Wallet"
 
 export default function HomePage() {
     const userToken = Cookies.get("userToken")
-
+    console.log(userToken)
     const navigate = useNavigate()
 
     const [showRForm, setSRForm] = useState(false)

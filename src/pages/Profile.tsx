@@ -15,7 +15,7 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState<ResponseData>();
   const [showWallet, setShowWallet] = useState(false);
-  const [activeTab, setActiveTab] = useState<TabType>("WITHDRAW");
+  const [activeTab, setActiveTab] = useState<TabType>("withdrawl");
 
   const userToken = Cookies.get("userToken");
 
@@ -33,14 +33,13 @@ export default function ProfilePage() {
   /* ================= DADOS ================= */
 
   const balance = Number(response?.usrdata?.balance ?? 0).toFixed(2);
-
   const orders: Order[] = response?.usrdata?.orders ?? [];
 
-  const withdraws = orders.filter(o => o.typeOrder === "WITHDRAW");
-  const deposits = orders.filter(o => o.typeOrder === "DEPOSIT");
+  const withdraws = orders.filter(o => o.typeOrder === "withdrawl");
+  const deposits = orders.filter(o => o.typeOrder === "recharge");
 
   const currentOrders =
-    activeTab === "WITHDRAW" ? withdraws : deposits;
+    activeTab === "withdrawl" ? withdraws : deposits;
 
   /* ================= HELPERS ================= */
 
@@ -53,10 +52,21 @@ export default function ProfilePage() {
     });
   };
 
+  // PIX válido por 20 minutos
+  const isPixAvailable = (createdAt?: string) => {
+    if (!createdAt) return false;
+
+    const created = new Date(createdAt).getTime();
+    const now = Date.now();
+
+    const diffMinutes = (now - created) / 1000 / 60;
+
+    return diffMinutes <= 20;
+  };
+
   /* ================= LOGOUT ================= */
 
   const handleLogout = () => {
-    localStorage.removeItem("userToken");
     Cookies.remove("userToken");
     window.location.reload();
   };
@@ -95,14 +105,13 @@ export default function ProfilePage() {
             {/* ================= ABAS ================= */}
             <div className="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 space-y-6">
               <div className="flex gap-4">
-                {/* SAQUES */}
                 <button
-                  onClick={() => setActiveTab("WITHDRAW")}
+                  onClick={() => setActiveTab("withdrawl")}
                   className={`
                     flex-1 py-3 rounded-xl font-semibold transition-all
                     active:scale-95
                     ${
-                      activeTab === "WITHDRAW"
+                      activeTab === "withdrawl"
                         ? "bg-indigo-700 text-white"
                         : "border border-indigo-700 text-indigo-400 hover:bg-indigo-700/10"
                     }
@@ -111,14 +120,13 @@ export default function ProfilePage() {
                   Saques
                 </button>
 
-                {/* DEPÓSITOS */}
                 <button
-                  onClick={() => setActiveTab("DEPOSIT")}
+                  onClick={() => setActiveTab("recharge")}
                   className={`
                     flex-1 py-3 rounded-xl font-semibold transition-all
                     active:scale-95
                     ${
-                      activeTab === "DEPOSIT"
+                      activeTab === "recharge"
                         ? "bg-emerald-700 text-white"
                         : "border border-emerald-700 text-emerald-400 hover:bg-emerald-700/10"
                     }
@@ -135,35 +143,73 @@ export default function ProfilePage() {
                     Nada aqui por enquanto...
                   </p>
                 ) : (
-                  currentOrders.map(order => (
-                    <div
-                      key={order.id}
-                      className="bg-zinc-950/50 border border-zinc-800 rounded-xl p-4 flex justify-between items-center"
-                    >
-                      <div className="space-y-1">
-                        <p className="font-medium text-zinc-100">
-                          {order.desc}
-                        </p>
+                  currentOrders.map(order => {
+                    const pixAvailable =
+                      activeTab === "recharge" &&
+                      isPixAvailable(order.createdAt);
 
-                        <span className="block text-xs text-zinc-500">
-                          {activeTab === "WITHDRAW"
-                            ? "Saque"
-                            : "Depósito"}{" "}
-                          • {formatDateTime(order.createdAt)}
-                        </span>
-                      </div>
-
-                      <span
-                        className={`font-semibold ${
-                          activeTab === "WITHDRAW"
-                            ? "text-red-400"
-                            : "text-emerald-400"
-                        }`}
+                    return (
+                      <div
+                        key={order.id}
+                        className={`rounded-xl p-4 border transition
+                          ${
+                            pixAvailable
+                              ? "bg-zinc-950/50 border-zinc-800"
+                              : "bg-zinc-900/40 border-zinc-800 opacity-60"
+                          }
+                        `}
                       >
-                        R$ {Number(order.amount).toFixed(2)}
-                      </span>
-                    </div>
-                  ))
+                        <div className="flex justify-between items-center">
+                          <div className="space-y-1">
+                            <p className="font-medium text-zinc-100">
+                              {order.desc}
+                            </p>
+
+                            <span className="block text-xs text-zinc-500">
+                              {activeTab === "withdrawl"
+                                ? "Saque"
+                                : "Depósito"}{" "}
+                              • {formatDateTime(order.createdAt)}
+                            </span>
+                          </div>
+
+                          <span
+                            className={`font-semibold ${
+                              activeTab === "withdrawl"
+                                ? "text-red-400"
+                                : "text-emerald-400"
+                            }`}
+                          >
+                            R$ {Number(order.amount).toFixed(2)}
+                          </span>
+                        </div>
+
+                        {/* ================= PIX ================= */}
+                        {activeTab === "recharge" && pixAvailable && (
+                          <div className="mt-3 bg-zinc-900 border border-zinc-800 rounded-lg p-3">
+                            <p className="text-xs text-zinc-400 mb-1">
+                              Chave PIX (copia e cola)
+                            </p>
+
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs text-zinc-300 break-all">
+                                {order.pixCopyPasteKey}
+                              </span>
+
+                              <button
+                                onClick={() =>
+                                  navigator.clipboard.writeText(order.pixCopyPasteKey || "")
+                                }
+                                className="text-xs text-emerald-400 hover:text-emerald-300 transition"
+                              >
+                                Copiar
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })
                 )}
               </div>
             </div>

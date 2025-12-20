@@ -97,7 +97,7 @@ export default function Gameboard({
                   onClick={() =>
                     setActiveIndex(isActive ? null : i)
                   }
-                  className="relative group w-36 h-36 bg-neutral-800 border border-neutral-700/20 rounded-4xl overflow-hidden flex items-center justify-center shadow-inner cursor-pointer"
+                  className="relative group md:w-36 md:h-36 bg-neutral-800 border border-neutral-700/20 rounded-4xl overflow-hidden flex items-center justify-center shadow-inner cursor-pointer"
                 >
                   {/* IMAGEM */}
                   {image && (

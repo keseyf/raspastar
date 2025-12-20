@@ -9,19 +9,21 @@ export interface Game {
 
 export type Order = {
   id: string;
-  typeOrder: "WITHDRAW" | "DEPOSIT";
+  typeOrder: "withdrawl" | "recharge";
   amount: string;
   desc: string;
   createdAt?: string;
+  pixCopyPasteKey?: string
 };
 
-export type TabType = "WITHDRAW" | "DEPOSIT";
+export type TabType = "withdrawl" | "recharge";
 
 export interface ResponseData {
   message: string,
   status: number,
   token?: string,
-  usrdata?: UserData
+  usrdata?: UserData,
+  pixCopyPasteKey?: string
 }
 
 export interface UserData {
